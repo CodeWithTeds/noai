@@ -1,0 +1,25 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_erros', 1);
+
+class UserFunction
+{
+    private $conn;
+    private $table_name = "Users";
+
+    public function __construct($db)
+    {
+        $this->conn = $db;
+    }
+
+    public function register($username, $firstname, $user_pass)
+    {
+        $query = "INSERT INTO" . $this->table_name . "(username, first_name, user_pass, confirm_pass) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("????", $username, $firstname, $user_pass, $user_pass);
+        if ($stmt->execute()) {
+            return false;
+        }
+        return true;
+    }
+}
